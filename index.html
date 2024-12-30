@@ -34,6 +34,9 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
@@ -663,17 +666,17 @@
                 </div>
                 <div class="col-lg-7 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <!-- <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p> -->
-                    <form id="contactForm" action="process_form.php" method="POST">
+                    <form id="contactForm">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                                    <input type="text" class="form-control" name = "user_name" id="name" placeholder="Your Name" required>
                                     <label for="name">Your Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                                    <input type="email" class="form-control" name="user_email" id="email" placeholder="Your Email" required>
                                     <label for="email">Your Email</label>
                                 </div>
                             </div>
@@ -685,7 +688,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 100px" required></textarea>
+                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 100px" name="message" required></textarea>
                                     <label for="message">Message</label>
                                 </div>
                             </div>
@@ -770,6 +773,34 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+    <script>
+        // Initialize EmailJS with your Public Key (User ID)
+        emailjs.init("IxLqjCwz4mAk4If0x"); // Replace with your actual public User ID from EmailJS
+        
+        // Listen for form submission
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+          event.preventDefault();  // Prevent the form from submitting the traditional way
+      
+          // Get the form data
+          const formData = new FormData(this);
+          console.log("Form Data:", formData);
+      
+          // Send the form data to EmailJS
+          emailjs.sendForm("service_mee7doi", "template_b6e0d7r", this)
+            .then(function(response) {
+              // Success: Show an alert or message to the user
+              alert("Message sent successfully!");
+              // Optionally, clear the form
+              document.getElementById("contact-form").reset();
+            }, function(error) {
+              // Error: Show an error message
+              alert("Failed to send message. Please try again later.");
+            });
+        });
+      </script>
 </body>
 
 </html>
